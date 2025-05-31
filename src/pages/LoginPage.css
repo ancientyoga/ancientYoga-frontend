@@ -1,0 +1,131 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #e0f2ff;
+  padding: 1rem;
+}
+
+.login-inner {
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #3b82f6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+
+.header-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.badge-container {
+  position: relative;
+  font-size: 1.75rem;
+  cursor: pointer;
+}
+
+.badge-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+.login-title {
+  font-size: 2rem;
+  color: #1e40af;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.password-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  padding: 0 0.75rem;
+  background-color: #fff;
+  margin-bottom: 1rem;
+}
+
+.password-box input {
+  flex: 1;
+  padding: 0.75rem 0;
+  border: none;
+  font-size: 1rem;
+}
+
+.password-box input:focus {
+  outline: none;
+}
+
+.show-hide {
+  color: #3b82f6;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-button {
+  width: 100%;
+  background-color: #3b82f6;
+  color: white;
+  padding: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+}
+
+.footer a {
+  color: #2563eb;
+  font-weight: 600;
+  margin-left: 0.25rem;
+  text-decoration: none;
+}

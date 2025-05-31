@@ -1,0 +1,114 @@
+/* Section Background and Layout */
+.mission-section {
+  position: relative;
+  background-image: url('../assets/bg1.png'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: flex-start; /* Align content to the left */
+  align-items: flex-start; /* Align content to the top */
+  height: auto; /* Ensures the section height adjusts to content */
+}
+
+/* Overlay to make the background slightly darker */
+.mission-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Dark overlay */
+  z-index: 0;
+}
+
+/* Container for the mission card */
+.mission-container {
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: flex-start; /* Align to the top */
+  gap: 20px;
+  max-width: 1200px; /* Limit the container's width */
+  width: 100%; /* Full width */
+  z-index: 2;
+}
+
+/* Left Section: Mission Card */
+.left-section {
+  background: rgba(255, 255, 255, 0.1); /* Transparent white background */
+  padding: 20px;
+  border-radius: 15px;
+  width: 650px; /* Set the width of the card */
+  box-shadow: 0px 15px 30px rgb(0, 0, 0); /* Heavy shadow */
+  text-align: left;
+  z-index: 2; /* Ensure it stays on top */
+  margin-bottom: 40px; /* Add some space between the card and the next section */
+}
+
+/* Title Styling */
+.center-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+/* Mission Description Styling */
+.left-section p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+/* Core Values Styling */
+.left-section h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-top: 20px;
+  color: #fff;
+}
+
+.left-section h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 10px 0;
+}
+
+.left-section p {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+/* Call to Action Button */
+.cta-button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  background-color: #ff6347;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.cta-button:hover {
+  background-color: #ff4500;
+  transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

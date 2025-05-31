@@ -1,0 +1,87 @@
+.payment-container {
+  padding: 5%;
+  background-color: #f9f9f9;
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5%;
+  margin-bottom: 20px;
+}
+
+.card p,
+.card h3 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.card ul {
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
+
+.pay-button {
+  background-color: #5c67f2;
+  padding: 12px;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  width: 100%;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.pay-button:hover {
+  background-color: #4b58e2;
+}
+
+@media screen and (max-width: 768px) {
+  .payment-container {
+    padding: 2%;
+  }
+
+  .header {
+    font-size: 20px;
+  }
+
+  .card p {
+    font-size: 14px;
+  }
+
+  .pay-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    font-size: 18px;
+  }
+
+  .card p {
+    font-size: 12px;
+  }
+
+  .pay-button {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+.loading {
+  font-size: 24px;
+  text-align: center;
+  margin-top: 40px;
+}

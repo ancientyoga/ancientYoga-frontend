@@ -1,0 +1,101 @@
+/* Apply background styling */
+.hero-section {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center bottom;
+  animation: backgroundFade 20s infinite;
+  z-index: 0;
+  opacity: 0.5; /* adjust as needed for visibility */
+}
+
+/* Keyframes for background transition */
+@keyframes backgroundFade {
+  0%   { background-image: url('../assets/Herosectiom.png'); }
+  20%  { background-image: url('../assets/1.jpg'); }
+  40%  { background-image: url('../assets/Herosectiom.png'); }
+  60%  { background-image: url('../assets/Herosectiom.png'); }
+  80%  { background-image: url('../assets/5.jpg'); }
+  100% { background-image: url('../assets/Herosectiom.png'); }
+}
+
+/* Content styling */
+.hero-section .content {
+  z-index: 2;
+  color: white;
+  max-width: 900px;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Add space between each section */
+}
+
+/* Font styling for each section */
+.hero-title {
+  font-family: 'Arial', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #FF6347; /* Tomato color for "Welcome to" */
+}
+
+.hero-subtitle {
+  font-family: 'Georgia', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #32CD32; /* Lime green for "Ancient Yoga" */
+}
+
+.hero-tagline {
+  font-family: 'Times New Roman', serif;
+  font-size: 2rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #1E90FF; /* Dodger blue for "Transform Your Life with Ancient Yoga Techniques" */
+}
+
+.hero-text {
+  font-family: 'Verdana', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: #FFD700; /* Gold for "Unlock the power of ancient wisdom" */
+}
+
+/* Button styling */
+.cta-button {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  color: #333;
+  background-color: #fff;
+  padding: 12px 30px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button:hover {
+  background-color:rgb(136, 134, 130);
+  color: #000;
+  transform: scale(1.1);
+  box-shadow: 0 12px 30px rgba(173, 171, 167, 0.67);
+}

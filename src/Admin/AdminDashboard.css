@@ -1,0 +1,144 @@
+/* Admin Dashboard Styles */
+.admin-dashboard-wrapper {
+ 
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+/* Card container */
+.admin-dashboard-card {
+    
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgb(0, 0, 0); /* heavier shadow */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect on card */
+.admin-dashboard-card:hover {
+  box-shadow: 0 16px 40px rgb(0, 0, 0);
+  transform: translateY(-5px);
+}
+
+/* Main layout */
+.admin-dashboard {
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-sidebar {
+  width: 250px;
+  background-color: #f0f4f8;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px 0 0 16px;
+}
+
+/* Admin avatar */
+.admin-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+
+}
+
+.admin-avatar{
+    image:'.assets/Admin.jpg';
+}
+/* Admin name */
+.admin-name {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+/* Sidebar nav links */
+.admin-link {
+  color: #495057;
+  font-size: 16px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.admin-link:hover {
+  color: #fff;
+  background-color: #007bff;
+}
+
+/* Main content */
+.admin-main {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Dashboard stat card */
+.admin-stat-card {
+  background-color: #e9f1fb;
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgb(0, 0, 0);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgb(0, 0, 0);
+}
+
+/* Icons inside cards */
+.admin-icon {
+  font-size: 40px;
+  color: #007bff;
+}
+
+/* Headings inside cards */
+.admin-stat-card h5 {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* Values inside cards */
+.admin-stat-card p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Responsive sidebar for small screens */
+@media (max-width: 768px) {
+  .admin-sidebar {
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    height: 100%;
+  }
+
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .admin-main {
+    margin-left: 0;
+  }
+
+  .welcome-card {
+  background: #f0f8ff;
+  border: none;
+  width: 100%;
+}
+
+
+
+.welcome-card {
+  
+}
+.welcome-card h4 {
+ height: 20px; /* You can adjust this number as needed */
+  border-radius: 30px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+}

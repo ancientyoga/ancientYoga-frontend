@@ -1,0 +1,32 @@
+.custom-header {
+    background-color: #222;
+    color: white;
+    padding: 15px 0;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .custom-header .social-icons a {
+    color: white;
+    margin-right: 15px;
+    font-size: 20px;
+    transition: color 0.3s ease;
+  }
+  
+  .custom-header .social-icons a:hover {
+    color: #00aced;
+  }
+  
+  .join-us-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .join-us-btn:hover {
+    background-color: #0056b3;
+  }
+  
