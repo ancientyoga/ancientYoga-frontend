@@ -5,12 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './AdminDashboard.css';
 import api from '../api';
-import ManageVideoLearning from './manageVideoLearning';
-
-
-
-         
-
 
 const statLinks = {
   totalUsers: '/admin/users',
@@ -77,11 +71,9 @@ const AdminDashboard = () => {
 
   const getProfileImageUrl = () => {
     if (!adminData.profile_picture) return '/assets/Admin.jpg';
-
     const path = adminData.profile_picture.startsWith('/')
       ? adminData.profile_picture
       : `/${adminData.profile_picture}`;
-
     return `http://localhost:5000${path}`;
   };
 
@@ -144,7 +136,6 @@ const AdminDashboard = () => {
               {renderCard('Blog Videos', stats.totalBlogVideos || 0, 'bi-camera-video', 'totalBlogVideos')}
               {renderCard('Current Offers', stats.currentOffers || 0, 'bi-tag', 'currentOffers')}
               {renderCard('Total Admins', stats.totalAdmins || 0, 'bi-person-badge', 'totalAdmins')}
-              
             </div>
           </main>
         </div>

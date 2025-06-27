@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import api from '../api'; // Assuming this contains BASE_URL
+import  { BASE_URL } from '../api'; 
+
 
 function UploadSampleVideo() {
   const [title, setTitle] = useState('');
@@ -14,20 +15,18 @@ function UploadSampleVideo() {
   const [videos, setVideos] = useState([]);
   const [editingId, setEditingId] = useState(null);
 
-  const BASE_URL = api.BASE_URL || 'http://localhost:5000';
-
-  const fetchVideos = async () => {
+  const fetchVideos = useCallback(async () => {
     try {
       const res = await axios.get(`${BASE_URL}/api/videos`);
       setVideos(res.data);
     } catch (err) {
       console.error('❌ Error fetching videos:', err);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchVideos();
-  }, []);
+  }, [fetchVideos]);
 
   const handleUpload = async () => {
     if (!videoFile && !editingId) {
@@ -197,13 +196,19 @@ function UploadSampleVideo() {
                   src={`${BASE_URL}/uploads/videos/${video.thumbnail}`}
                   className="card-img-top"
                   alt="Thumbnail"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/assets/default-thumbnail.jpg';
+                  }}
                 />
               )}
               <div className="card-body">
                 <h5 className="card-title">{video.title}</h5>
                 <p className="card-text">{video.description}</p>
                 {video.youtube_link && (
-                  <p className="text-primary">🎬 <a href={video.youtube_link} target="_blank" rel="noreferrer">YouTube</a></p>
+                  <p className="text-primary">
+                    🎬 <a href={video.youtube_link} target="_blank" rel="noreferrer">YouTube</a>
+                  </p>
                 )}
                 <p className="mb-0"><strong>Sample:</strong> {video.is_sample ? 'Yes' : 'No'}</p>
                 <p><strong>Full Course:</strong> {video.is_fullcourse ? 'Yes' : 'No'}</p>

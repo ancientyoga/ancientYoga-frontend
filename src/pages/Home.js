@@ -1,20 +1,17 @@
 // src/pages/Home.js
 import React, { useState } from 'react';
 import HeroSection from '../components/HeroSection';
-
 import SubscribeSection from '../components/SubscribeSection';
 import AboutSection from '../components/AboutSection';
-
 import ContactSection from '../components/ContactSection';
 import VideoLearning from '../components/VideoLearning';
 import PricingSection from '../components/PricingSection';
 
-
 const Home = () => {
-  // These would be dynamically fetched or from context/auth in a real app
-  const [isLoggedIn, setIsLoggedIn] = useState(true);        // set false for guest
-  const [hasPurchased, setHasPurchased] = useState(false);   // true if course is purchased
-  const [subscriberCount, setSubscriberCount] = useState(128); // total subscribers
+  // In a real app, these would come from your auth/user context
+  const isLoggedIn = true;        // set false for guest
+  const hasPurchased = false;     // true if course is purchased
+  const [subscriberCount, setSubscriberCount] = useState(128); 
 
   const handleSubscribeClick = () => {
     if (!isLoggedIn) {
@@ -30,13 +27,9 @@ const Home = () => {
   return (
     <>
       <HeroSection />
-      <VideoLearning/>
-      
-      
+      <VideoLearning />
       <AboutSection />
-      <PricingSection/>
-
-      
+      <PricingSection />
       <ContactSection />
       <SubscribeSection
         isLoggedIn={isLoggedIn}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './ContactSection.css';
-import { FaMapMarkerAlt, FaPhoneAlt, FaPaperPlane } from 'react-icons/fa';
+import {  FaPhoneAlt, FaPaperPlane } from 'react-icons/fa';
 import api from '../api';
 
 const ContactSection = () => {

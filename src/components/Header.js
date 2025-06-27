@@ -22,7 +22,7 @@ const Header = () => {
   useEffect(() => {
     const fetchSubCount = async () => {
       try {
-        const res = await api.get('/api/subcount');
+        const res = await api.get('/api/subscription/subcount');
         setCount(res.data.count || 0);
       } catch (err) {
         console.error("Failed to fetch subscription count", err);

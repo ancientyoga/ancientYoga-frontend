@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import api from '../api';
+import api, { BASE_URL } from '../api'; // 🔥 import BASE_URL here
 import './ManageVideoLearning.css';
 
 export default function ManageVideoLearning() {
@@ -29,7 +29,10 @@ export default function ManageVideoLearning() {
   const fetchVideos = async () => {
     try {
       const res = await api.get('/api/managevideo');
-      const initialized = res.data.map(video => ({ ...video, showVideo: !!video.videos }));
+      const initialized = res.data.map(video => ({
+        ...video,
+        showVideo: !!video.videos
+      }));
       setVideos(initialized);
     } catch (err) {
       console.error('❌ Fetch videos error:', err);
@@ -123,8 +126,7 @@ export default function ManageVideoLearning() {
 
   return (
     <div className="mv-container">
-      <br />
-      <br />
+      <br /><br />
       <h2 className="mv-heading">Manage Course Videos</h2>
       <form
         ref={formRef}
@@ -146,7 +148,12 @@ export default function ManageVideoLearning() {
             value={form.youtubeLink}
             onChange={handleChange}
           />
-          <select name="course_id" value={form.course_id} onChange={handleChange} required>
+          <select
+            name="course_id"
+            value={form.course_id}
+            onChange={handleChange}
+            required
+          >
             <option value="">Choose Course</option>
             {courses.map(c => (
               <option key={c.id} value={c.id}>
@@ -154,7 +161,12 @@ export default function ManageVideoLearning() {
               </option>
             ))}
           </select>
-          <select name="admin_id" value={form.admin_id} onChange={handleChange} required>
+          <select
+            name="admin_id"
+            value={form.admin_id}
+            onChange={handleChange}
+            required
+          >
             <option value="">Choose Admin</option>
             {admins.map(a => (
               <option key={a.id} value={a.id}>
@@ -195,20 +207,23 @@ export default function ManageVideoLearning() {
             <div className="mv-thumbnail">
               {!v.showVideo && v.thumbnail && (
                 <img
-                  src={`/uploads/${v.thumbnail}`}
+                  src={`${BASE_URL}/uploads/${v.thumbnail}`}
                   alt={v.title}
                   className="mv-thumbnail-img"
                 />
               )}
               {v.showVideo && v.videos && (
                 <video autoPlay muted controls className="mv-video">
-                  <source src={`/uploads/${v.videos}`} type="video/mp4" />
+                  <source
+                    src={`${BASE_URL}/uploads/${v.videos}`}
+                    type="video/mp4"
+                  />
                 </video>
               )}
             </div>
             <div className="mv-card-body">
               <h5>{v.title}</h5>
-              <p>{v.description.slice(0, 80)}...</p>
+              <p>{(v.description || '').slice(0, 80)}...</p>
               <div className="mv-card-actions">
                 <button className="mv-btn-edit" onClick={() => handleEdit(v)}>
                   Edit

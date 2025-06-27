@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import api from '../api';
 import './ManageInfo.css';
 
@@ -22,7 +22,7 @@ const ManageInfo = () => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
-  const getToken = () => {
+  const getToken = useCallback(() => {
     const adminData = localStorage.getItem('adminData');
     try {
       return adminData ? JSON.parse(adminData).token : '';
@@ -30,9 +30,9 @@ const ManageInfo = () => {
       console.error('❌ Token parse error:', err);
       return '';
     }
-  };
+  }, []);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const token = getToken();
     if (!token) {
       console.warn('⚠️ No token found');
@@ -52,11 +52,11 @@ const ManageInfo = () => {
         window.location.href = '/admin-login';
       }
     }
-  };
+  }, [getToken]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -192,9 +192,9 @@ const ManageInfo = () => {
                   <td>{entry.phone}</td>
                   <td>{entry.email}</td>
                   <td>
-                    <a href={entry.facebook_url} target="_blank" rel="noreferrer">FB</a> |{' '}
-                    <a href={entry.youtube_url} target="_blank" rel="noreferrer">YT</a> |{' '}
-                    <a href={entry.instagram_url} target="_blank" rel="noreferrer">IG</a>
+                    {entry.facebook_url && <a href={entry.facebook_url} target="_blank" rel="noreferrer">FB</a>} {entry.facebook_url && '| '}
+                    {entry.youtube_url && <a href={entry.youtube_url} target="_blank" rel="noreferrer">YT</a>} {entry.youtube_url && '| '}
+                    {entry.instagram_url && <a href={entry.instagram_url} target="_blank" rel="noreferrer">IG</a>}
                   </td>
                   <td>
                     <button className="btn btn-sm btn-outline-success me-2" onClick={() => handleEdit(entry)}>
