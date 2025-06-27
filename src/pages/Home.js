@@ -1,12 +1,14 @@
 // src/pages/Home.js
 import React, { useState } from 'react';
 import HeroSection from '../components/HeroSection';
-import SampleVideoCard from '../components/SampleVideoCard';
+
 import SubscribeSection from '../components/SubscribeSection';
 import AboutSection from '../components/AboutSection';
-import MissionSection from '../components/MissionSection';
+
 import ContactSection from '../components/ContactSection';
-import SampleVideosSection from '../components/SampleVideosSection';
+import VideoLearning from '../components/VideoLearning';
+import PricingSection from '../components/PricingSection';
+
 
 const Home = () => {
   // These would be dynamically fetched or from context/auth in a real app
@@ -28,19 +30,20 @@ const Home = () => {
   return (
     <>
       <HeroSection />
-      <SampleVideoCard />
-      <SampleVideosSection />
+      <VideoLearning/>
+      
+      
+      <AboutSection />
+      <PricingSection/>
+
+      
+      <ContactSection />
       <SubscribeSection
         isLoggedIn={isLoggedIn}
         hasPurchased={hasPurchased}
         subscriberCount={subscriberCount}
         onSubscribeClick={handleSubscribeClick}
       />
-      
-      <AboutSection />
-      <MissionSection />
-      <ContactSection />
-      
     </>
   );
 };

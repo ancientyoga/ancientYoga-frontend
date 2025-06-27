@@ -1,169 +1,152 @@
+// 📁 src/pages/AdminDashboard.jsx
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import './AdminDashboard.css'; // Ensure this CSS file exists
-import { Link } from 'react-router-dom';
+import './AdminDashboard.css';
+import api from '../api';
+import ManageVideoLearning from './manageVideoLearning';
+
+
+
+         
+
+
+const statLinks = {
+  totalUsers: '/admin/users',
+  totalSubscribers: '/purchase-reports',
+  OrderList: '/order-list',
+  ManageBlogs: '/manage-videos',
+  totalBlogVideos: '/upload-sample-videos',
+  currentOffers: '/manage-pricing',
+  totalAdmins: '/manageadmins',
+  ManageCourse: '/manage-course',
+  ManageInfo: '/admin/manage-info',
+  managelearn: '/managevideo',
+  ManageUser: '/admin/users'
+};
 
 const AdminDashboard = () => {
+  const [stats, setStats] = useState({});
   const [collapsed, setCollapsed] = useState(false);
-  const [adminName, setAdminName] = useState('Arjun Nandi');
+  const [adminData, setAdminData] = useState({
+    name: 'Admin',
+    profile_picture: ''
+  });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-  console.log("Admin Dashboard loaded");
-}, []);
-  useEffect(() => {
-    const savedAdmin = localStorage.getItem('loggedInUser');
+    const savedAdmin = localStorage.getItem('adminData');
     if (savedAdmin) {
-      setAdminName(savedAdmin);
+      try {
+        const parsed = JSON.parse(savedAdmin);
+        setAdminData({
+          name: parsed.name || 'Admin',
+          profile_picture: parsed.profile_picture || ''
+        });
+      } catch (err) {
+        console.error('Error parsing adminData', err);
+      }
     }
+
+    api.get('/api/stats')
+      .then((res) => {
+        setStats(res.data || {});
+      })
+      .catch((err) => {
+        console.error('Failed to fetch stats', err);
+      });
   }, []);
 
+  const renderCard = (title, value, icon, linkKey) => (
+    <div className="admindash-col col-6 col-md-4 col-lg-3" key={linkKey}>
+      <div
+        className="admindash-card card border-0 shadow-sm h-100"
+        onClick={() => navigate(statLinks[linkKey])}
+        style={{ cursor: 'pointer' }}
+      >
+        <div className="card-body text-center">
+          <i className={`bi ${icon} fs-1 text-primary`}></i>
+          <h6 className="mt-3 fw-semibold">{title}</h6>
+          <p className="fs-5 fw-bold text-dark mb-0">{value}</p>
+        </div>
+      </div>
+    </div>
+  );
+
+  const getProfileImageUrl = () => {
+    if (!adminData.profile_picture) return '/assets/Admin.jpg';
+
+    const path = adminData.profile_picture.startsWith('/')
+      ? adminData.profile_picture
+      : `/${adminData.profile_picture}`;
+
+    return `http://localhost:5000${path}`;
+  };
+
   return (
-    <div className="admin-dashboard-wrapper p-3">
-
-      <div className="container mb-4">
-        <div className="welcome-card shadow rounded w-100 text-center">
-          <div className="card-body py-2">
-            <br />
-          </div>
-        </div>
+    <div className="admindash-wrapper container-fluid bg-light py-5 min-vh-100">
+      <br/>
+      <br/>
+      <div className="admindash-header text-center mb-4">
+        <h2 className="fw-bold text-dark">
+          Welcome to Admin Panel, <span className="text-primary">{adminData.name}</span>
+        </h2>
       </div>
 
-      {/* Topbar Welcome Card */}
-      <div className="container mb-4">
-        <div className="welcome-card shadow rounded w-100 text-center">
-          <div className="card-body py-2">
-            <h4 className="mb-0">Welcome, {adminName}!</h4>
-          </div>
-        </div>
-      </div>
-
-      {/* Dashboard Card */}
-      <div className="admin-dashboard-card shadow-lg rounded">
-        <div className="admin-dashboard d-flex">
-
-          {/* Sidebar */}
+      <div className="row">
+        <div className="col-lg-3 mb-4">
           {!collapsed && (
-            <div className="admin-sidebar p-3">
-              <div className="admin-profile text-center mb-4">
+            <aside className="admindash-sidebar p-3 text-white rounded shadow-sm">
+              <div className="admindash-profile text-center mb-4">
                 <img
-                  src="assets\Admin.jpg"
+                  src={getProfileImageUrl()}
                   alt="Admin"
-                  className="admin-avatar mb-2"
+                  className="admindash-profile-img rounded-circle border border-white shadow"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/assets/Admin.jpg';
+                  }}
                 />
-                <h5 className="admin-name">{adminName}</h5>
+                <h5 className="mt-3 fw-bold">{adminData.name}</h5>
               </div>
               <ul className="nav flex-column">
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/user-management">
-                    <i className="bi bi-people"></i> User Management
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/upload-sample-videos">
-                    <i className="bi bi-upload"></i> Upload Sample Videos
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/upload-full-courses">
-                    <i className="bi bi-play-circle"></i> Upload Full Courses
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/manage-comments">
-                    <i className="bi bi-chat-dots"></i> Manage Comments
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/add-admin">
-                    <i className="bi bi-person-plus"></i> Add Admin
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/manage-courses">
-                    <i className="bi bi-journal-plus"></i> Manage Courses
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/offers-discounts">
-                    <i className="bi bi-currency-dollar"></i> Offers & Discounts
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/purchase-reports">
-                    <i className="bi bi-graph-up"></i> Purchase Reports
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link admin-link" to="/edit-homepage">
-                    <i className="bi bi-house"></i> Edit Homepage
-                  </Link>
-                </li>
+                {Object.entries(statLinks).map(([key, link]) => (
+                  <li className="nav-item mb-2" key={key}>
+                    <Link className="nav-link text-white admindash-link" to={link}>
+                      <i className="bi bi-chevron-right me-2"></i>
+                      {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                    </Link>
+                  </li>
+                ))}
               </ul>
-            </div>
+            </aside>
           )}
+        </div>
 
-          {/* Main Content */}
-          <div className="admin-main p-4 flex-grow-1">
-            <div className="row">
-              <div className="col-1">
-                <button
-                  className="btn btn-outline-secondary mb-4"
-                  onClick={() => setCollapsed(!collapsed)}
-                >
-                  <i className={`bi ${collapsed ? 'bi-list' : 'bi-x-lg'}`}></i>
-                </button>
-              </div>
-              <div className="col-10">
-                <div className="container mb-4">
-                  <div className="welcome-card shadow rounded w-100 text-center">
-                    <div className="card-body py-2">
-                      <h4>Admin Dashboard</h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div className="col-lg-9">
+          <main className="admindash-main p-4 bg-white rounded shadow-sm">
+            <div className="d-flex justify-content-end mb-4">
+              <button
+                className="btn btn-sm btn-outline-secondary"
+                onClick={() => setCollapsed(prev => !prev)}
+              >
+                <i className={`bi ${collapsed ? 'bi-list' : 'bi-x-lg'}`}></i>
+              </button>
             </div>
 
             <div className="row g-4">
-              <div className="col-md-4">
-                <div className="admin-stat-card p-3 shadow-sm">
-                  <i className="bi bi-people admin-icon"></i>
-                  <h5>Total Users</h5>
-                  <p>1245</p>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="admin-stat-card p-3 shadow-sm">
-                  <i className="bi bi-bell admin-icon"></i>
-                  <h5>Subscribers</h5>
-                  <p>378</p>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="admin-stat-card p-3 shadow-sm">
-                  <i className="bi bi-graph-up-arrow admin-icon"></i>
-                  <h5>Visitors</h5>
-                  <p>1987</p>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="admin-stat-card p-3 shadow-sm">
-                  <i className="bi bi-cloud-upload admin-icon"></i>
-                  <h5>Courses Uploaded</h5>
-                  <p>65</p>
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="admin-stat-card p-3 shadow-sm">
-                  <i className="bi bi-hand-thumbs-up admin-icon"></i>
-                  <h5>Positive Reviews</h5>
-                  <p>1023</p>
-                </div>
-              </div>
+              {renderCard('Total Users', stats.totalUsers || 0, 'bi-people', 'totalUsers')}
+              {renderCard('Subscribers', stats.totalSubscribers || 0, 'bi-bell', 'totalSubscribers')}
+              {renderCard('Revenue', `₹${stats.totalRevenue || 0}`, 'bi-currency-rupee', 'totalRevenue')}
+              {renderCard('Courses Uploaded', stats.totalCourses || 0, 'bi-play-circle', 'totalCourses')}
+              {renderCard('Blog Videos', stats.totalBlogVideos || 0, 'bi-camera-video', 'totalBlogVideos')}
+              {renderCard('Current Offers', stats.currentOffers || 0, 'bi-tag', 'currentOffers')}
+              {renderCard('Total Admins', stats.totalAdmins || 0, 'bi-person-badge', 'totalAdmins')}
+              
             </div>
-          </div>
-
+          </main>
         </div>
       </div>
     </div>

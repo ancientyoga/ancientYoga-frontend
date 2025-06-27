@@ -1,24 +1,25 @@
 import React from 'react';
 import './AboutSection.css';
-import bgImage from '../assets/6.jpg'; // Replace with your actual image path
+
+import bgImage from '../assets/aboutbg2.png'; // fallback if aboutbg1.jpg not found
+ // ✅ Make sure this file exists
 
 const AboutSection = () => {
   return (
     <section
-      className="about-section"
+      className="yoga-about-section"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <div className="overlay"></div>
-      <div className="content">
-        <div className="about-text">
-          <h4 className="subheading">Relish in Nature's Natural Gift</h4>
-          <h1 className="main-heading">LIFE IN DIVINE YOGA</h1>
+      <div className="yoga-overlay"></div>
+      <div className="yoga-about-content">
+        <div className="yoga-about-text">
+          <h4 className="yoga-about-subheading">Relish in Nature's Natural Gift</h4>
+          <h1 className="yoga-about-heading">LIFE IN DIVINE YOGA</h1>
           <blockquote>
             “I am standing on my own altar, The Poses are my prayers”
           </blockquote>
           <p>
-            At Ancient Yoga, we are dedicated to helping you unlock the wisdom of yoga to transform your life. 
-            Whether you're new to yoga or an experienced practitioner, our courses help improve your health, mind, and overall well-being.
+            At Ancient Yoga, we are dedicated to helping you unlock the wisdom of yoga to transform your life.
           </p>
           <ul>
             <li>Improved flexibility and strength</li>
@@ -29,13 +30,16 @@ const AboutSection = () => {
           <p>
             Start your yoga journey today and take control of your health and well-being.
           </p>
-
-          <div className="cta-section">
+          <div className="yoga-about-cta">
             <p>Ready to take your yoga practice to the next level?</p>
             <a href="/login">
-              <button className="cta-button">Get Started Today</button>
+              <button className="yoga-about-button">Get Started Today</button>
             </a>
           </div>
+        </div>
+
+        <div className="yoga-about-images">
+          
         </div>
       </div>
     </section>

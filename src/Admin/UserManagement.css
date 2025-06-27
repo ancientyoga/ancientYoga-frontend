@@ -1,0 +1,41 @@
+/* FILE: frontend/src/Admin/UserManagement.css */
+
+.um-wrapper {
+  padding-bottom: 50px;
+}
+
+.um-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.um-table-wrapper {
+  overflow-x: auto;
+}
+
+.um-table th,
+.um-table td {
+  vertical-align: middle !important;
+  text-align: center;
+}
+
+.um-table th {
+  white-space: nowrap;
+}
+
+.um-table td {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .um-title {
+    font-size: 1.4rem;
+  }
+
+  .um-table td,
+  .um-table th {
+    font-size: 0.85rem;
+    padding: 6px;
+  }
+}

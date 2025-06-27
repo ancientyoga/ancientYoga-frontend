@@ -1,32 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import api from '../api'; // ✅ Using central API instance
 
 const CourseDetails = () => {
-  const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [allCourses, setAllCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const { id } = useParams();
+  const location = useLocation();
   const navigate = useNavigate();
 
-  // Fetch courses from backend
-  const fetchCourses = async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/courses`);
-      setCourses(response.data);
-    } catch (error) {
-      console.error('Failed to fetch courses:', error);
-      setError('Something went wrong while loading courses.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const courseId = id || location.state?.courseData;
 
   useEffect(() => {
-    fetchCourses();
-  }, []);
+    const fetchCourses = async () => {
+      try {
+        const allRes = await api.get('/api/courses');
+        setAllCourses(allRes.data);
 
-  // Handle Buy Now click
+        if (courseId) {
+          const selectedRes = await api.get(`/api/courses/${courseId}`);
+          setSelectedCourse(selectedRes.data);
+        }
+      } catch (err) {
+        console.error('❌ Failed to load course data:', err);
+        setError('Something went wrong while loading course data.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, [courseId]);
+
   const handleBuyNow = (course) => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || !user.email) {
@@ -35,67 +44,108 @@ const CourseDetails = () => {
       }
       return;
     }
+
     navigate(`/payment/${course.id}`, { state: { user } });
   };
 
-  if (loading) {
-    return (
-      <div className="text-center mt-5">
-        <div className="spinner-border text-primary"></div>
-      </div>
-    );
-  }
+  if (loading) return <div className="text-center mt-5">Loading...</div>;
+  if (error) return <div className="alert alert-danger">{error}</div>;
 
   return (
     <div className="container py-4">
-      {error && <div className="alert alert-danger">{error}</div>}
+      <br />
+      <br />
+      <br />
 
-      {courses.length === 0 ? (
-        <p>No courses available.</p>
-      ) : (
-        courses.map((course) => (
-          <div key={course.id} className="card mb-4 shadow-sm">
-            <div className="card-body">
-              <h3 className="card-title text-success">{course.title}</h3>
-              <p className="card-text text-muted">{course.description}</p>
-
-              <h5>🌿 What You’ll Learn</h5>
-              <ul className="mb-3">
-                <li>🧘‍♀️ Traditional Asanas & Postures</li>
-                <li>🫁 Pranayama (Breathing Techniques)</li>
-                <li>🕉️ Meditation & Mindfulness Practices</li>
-                <li>🍃 Yogic Diet & Lifestyle Guidance</li>
-                <li>📜 History & Philosophy of Ancient Yoga</li>
+      {/* 🌿 Selected Course Section */}
+      {selectedCourse ? (
+        <div className="row mb-5">
+          {/* Left: Course Details */}
+          <div className="col-lg-6 mb-4">
+            <div className="p-4 rounded shadow course-card bg-white">
+              <h2 className="text-success fw-bold">{selectedCourse.title}</h2>
+              <p className="text-muted fs-5">{selectedCourse.description}</p>
+              <hr />
+              <h4>🌿 What You’ll Learn</h4>
+              <ul className="list-group list-group-flush mb-3">
+                <li className="list-group-item">🧘‍♀️ Traditional Asanas & Postures</li>
+                <li className="list-group-item">🫁 Pranayama (Breathing Techniques)</li>
+                <li className="list-group-item">🕉️ Meditation & Mindfulness Practices</li>
+                <li className="list-group-item">🍃 Yogic Diet & Lifestyle Guidance</li>
+                <li className="list-group-item">📜 History & Philosophy of Ancient Yoga</li>
               </ul>
-
-              {/* Optional course-specific topics */}
-              {course.topics && course.topics.length > 0 && (
-                <ul className="mb-3">
-                  {course.topics.map((topic, index) => (
-                    <li key={index}>{topic}</li>
-                  ))}
-                </ul>
-              )}
-
-              <p className="fw-bold">
-                💰 Price: <span className="text-danger">₹{course.price}</span>
-              </p>
-
-              <button className="btn btn-warning fw-bold" onClick={() => handleBuyNow(course)}>
+              <h5>💰 Price: <span className="text-danger fw-bold">₹{selectedCourse.price}</span></h5>
+              <button className="btn btn-warning fw-bold px-4 py-2 mt-3" onClick={() => handleBuyNow(selectedCourse)}>
                 Buy Full Course Now
               </button>
-
-              <div className="alert alert-info mt-3">
-                📥 Note: Once you complete the purchase, you’ll receive lifetime access via Google Drive.
+              <div className="alert alert-info mt-4" role="alert">
+                📥 <strong>Note:</strong> Once purchased, you’ll receive lifetime access via Google Drive.
               </div>
             </div>
+          </div>
 
-            <div className="bg-light text-center py-4 rounded-bottom">
-              <h5>Ancient Wisdom, Timeless Health 🧘‍♂️</h5>
+          {/* Right: Background Banner */}
+          <div className="col-lg-6">
+            <div
+              className="bg-section d-flex align-items-center justify-content-center text-black text-center rounded"
+              style={{
+                background: `url('/assets/hero/bg1.png') center center/cover no-repeat`,
+                minHeight: '400px',
+                borderRadius: '1rem',
+              }}
+            >
+              <h2 className="display-6 fw-bold text-shadow">Ancient Wisdom, Timeless Health 🧘‍♂️</h2>
             </div>
           </div>
-        ))
+        </div>
+      ) : (
+        <div className="alert alert-info text-center">🎓 Please select a course to view details or buy.</div>
       )}
+
+      {/* 🧘 All Courses Below */}
+      <h4 className="mb-4">{selectedCourse ? '📚 Explore More Courses' : '📚 All Available Courses'}</h4>
+
+      <div className="row">
+        {allCourses
+          .filter(course => course.id !== selectedCourse?.id)
+          .map((course) => (
+            <div key={course.id} className="col-md-6 col-lg-4 mb-4">
+              <div className="p-3 shadow course-card rounded h-100 d-flex flex-column">
+                <h5 className="text-primary fw-bold">{course.title}</h5>
+                <p className="text-muted flex-grow-1">{course.description}</p>
+                <p className="mb-2">💰 <strong>₹{course.price}</strong></p>
+                <div className="d-flex justify-content-between mt-auto">
+                  <button
+                    className="btn btn-outline-primary me-2"
+                    onClick={() => navigate(`/course/${course.id}/coursedetails`, { state: { courseData: course.id } })}
+                  >
+                    View Details
+                  </button>
+                  <button className="btn btn-success" onClick={() => handleBuyNow(course)}>
+                    Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+
+      {/* Scoped styling */}
+      <style>{`
+        .course-card {
+          background: rgba(255, 255, 255, 0.95);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+          border-radius: 1rem;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .course-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+        .text-shadow {
+          text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+        }
+      `}</style>
     </div>
   );
 };

@@ -1,0 +1,110 @@
+/* Container for the Payment Success Page */
+.payment-success-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.order-summary-card{
+    background-color: #e6f4ea;
+    border: 1px solid #28a745;
+    margin-bottom: 2rem;
+}
+
+/* Top confirmation card */
+.payment-success-card {
+  border: 1px solid #28a745;
+  border-radius: 10px;
+  padding: 2rem;
+  background-color: #e6f4ea;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.payment-success-card h1 {
+  color: #28a745;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.payment-success-card p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.payment-success-button {
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.5rem;
+  font-weight: bold;
+  border-radius: 30px;
+  border: 2px solid #28a745;
+  background-color: white;
+  color: #28a745;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.payment-success-button:hover {
+  background-color: #28a745;
+  color: white;
+}
+
+/* Info and article section */
+.payment-info-section {
+  background:rgba(253, 253, 253, 0.39);
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.payment-info-section h2 {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.payment-info-section p {
+  margin-bottom: 0.8rem;
+  color: #444;
+  font-size: 1.05rem;
+}
+
+.payment-info-section ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.payment-info-section ul li {
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.payment-info-section ul li::before {
+  content: "✔️";
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.payment-signature {
+  margin-top: 2rem;
+  font-style: italic;
+  text-align: right;
+  color: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .payment-success-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .payment-success-card p,
+  .payment-info-section p {
+    font-size: 1rem;
+  }
+
+  .payment-info-section {
+    padding: 1.2rem;
+  }
+}

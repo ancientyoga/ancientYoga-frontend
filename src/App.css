@@ -4,6 +4,13 @@
   width: 100%;
   z-index: 999;
 }
+.overlay-wrapper {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
 
 /* Navbar.css */
 .main-navbar {
@@ -20,7 +27,7 @@
   position: fixed;
   top: 0;
   background: #fff;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 25px rgb(0, 0, 0);
 }
 
 /* Header.css */

@@ -1,0 +1,54 @@
+/* VideoLearning.css */
+
+.video-learn-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-learn-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding-bottom: 10px;
+}
+
+.video-learn-card {
+  flex: 0 0 auto;
+  width: calc(100% / 3 - 1rem);
+  min-width: 300px;
+}
+
+.video-learn-scroll-btn {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  width: 40px;
+  height: 60px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.video-learn-scroll-btn.left {
+  left: 0;
+}
+
+.video-learn-scroll-btn.right {
+  right: 0;
+}
+
+@media (max-width: 992px) {
+  .video-learn-card {
+    width: calc(100% / 2 - 1rem);
+  }
+}
+
+@media (max-width: 576px) {
+  .video-learn-card {
+    width: 100%;
+  }
+}

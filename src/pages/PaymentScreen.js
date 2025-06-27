@@ -1,116 +1,113 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Razorpay from 'razorpay';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import './PaymentScreen.css';
+import api from '../api'; // ✅ Import centralized axios instance
 
 export default function PaymentScreen() {
+  const { id: courseId } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { courseId, user } = location.state;
-  
+  const { user } = location.state || {};
+
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
   useEffect(() => {
-    fetch(`http://localhost:5000/api/courses/${courseId}`)
-      .then(res => res.json())
-      .then(data => {
-        setCourse(data);
+    if (!courseId || !user) {
+      navigate('/courses');
+      return;
+    }
+
+    api.get(`/api/courses/${courseId}`)
+      .then(res => {
+        setCourse(res.data);
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
-        // Navigate to the failure screen if the course fetching fails.
         navigate('/payment-failure', { state: { courseId, user } });
       });
-  }, [courseId, navigate]);
+  }, [courseId, user, navigate]);
 
   const handlePayment = async () => {
+    const scriptLoaded = await loadRazorpayScript();
+    if (!scriptLoaded) {
+      alert('Razorpay SDK failed to load');
+      return;
+    }
+
     try {
-      const orderResponse = await fetch(`http://localhost:5000/api/payment/create-order`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: course.price }),
+      const orderRes = await api.post('/api/payment/create-order', {
+        amount: course.price,
       });
 
-      if (!orderResponse.ok) {
-        const errorText = await orderResponse.text();
-        throw new Error(errorText || 'Failed to fetch order details');
-      }
-
-      const orderData = await orderResponse.json();
-      if (orderData.error) throw new Error(orderData.error);
+      const orderData = orderRes.data;
 
       const options = {
-        description: `Payment for ${course.title}`,
-        image: "https://your_logo_url.png",
-        currency: orderData.currency,
-        key: "rzp_test_SO0yWkGNPJARIG",
+        key: 'rzp_test_SO0yWkGNPJARIG', // Replace with your live key in production
         amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'Ancient Yoga',
+        description: `Payment for ${course.title}`,
         order_id: orderData.id,
-        name: "Ancient Yoga",
         prefill: {
-          email: user.email || "no-email@example.com",
-          contact: user.contact || "1234567890",
-          name: user.name || "Yoga User",
+          name: user.name || 'Yoga User',
+          email: user.email || 'no-email@example.com',
+          contact: user.contact || '9999999999',
         },
-        theme: { color: "#5c67f2" },
+        handler: async (paymentResponse) => {
+          try {
+            const verifyRes = await api.post('/api/payment/verify-payment', {
+              razorpay_payment_id: paymentResponse.razorpay_payment_id,
+              razorpay_order_id: paymentResponse.razorpay_order_id,
+              razorpay_signature: paymentResponse.razorpay_signature,
+              userId: user.id,
+              courseId: course.id,
+              amount: orderData.amount / 100,
+            });
+
+            if (verifyRes.data.success) {
+              alert('✅ Payment Successful!');
+              navigate('/payment-success', {
+                state: {
+                  orderData: {
+                    razorpay_order_id: paymentResponse.razorpay_order_id,
+                    razorpay_payment_id: paymentResponse.razorpay_payment_id,
+                    amount: orderData.amount,
+                    courseId: course.id,
+                    courseTitle: course.title,
+                    email: user.email,
+                  },
+                },
+              });
+            } else {
+              navigate('/payment-failure', { state: { courseId, user } });
+            }
+          } catch (error) {
+            console.error('❌ Verification failed:', error);
+            navigate('/payment-failure', { state: { courseId, user } });
+          }
+        },
+        modal: {
+          ondismiss: () => navigate('/payment-failure', { state: { courseId, user } }),
+        },
+        theme: { color: '#5c67f2' },
       };
 
-      const razorpay = new Razorpay(options);
+      const razorpay = new window.Razorpay(options);
       razorpay.open();
-
-      razorpay.on('payment.success', (paymentResponse) => {
-        verifyPayment(paymentResponse, orderData);
-      });
-
-      razorpay.on('payment.error', (error) => {
-        console.error("Payment failed:", error);
-        navigate('/payment-failure', { state: { courseId, user } });
-      });
-
-    } catch (error) {
-      console.error("Payment initialization failed:", error);
-      navigate('/payment-failure', { state: { courseId, user } });
-    }
-  };
-
-  const verifyPayment = async (paymentResponse, orderData) => {
-    try {
-      const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = paymentResponse;
-
-      const verifyResponse = await fetch(`http://localhost:5000/api/payment/verify-payment`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          razorpay_payment_id,
-          razorpay_order_id,
-          razorpay_signature,
-          userId: user.id,
-          courseId: course.id,
-          amount: orderData.amount / 100,
-        }),
-      });
-
-      const verifyData = await verifyResponse.json();
-
-      if (verifyData.success) {
-        alert("Success", "Payment was successful!");
-        navigate('/payment-success', {
-          state: {
-            user: user,
-            course: course,
-            paymentDetails: {
-              paymentId: razorpay_payment_id,
-              amount: orderData.amount / 100,
-            },
-          }
-        });
-      } else {
-        navigate('/payment-failure', { state: { courseId, user } });
-      }
-    } catch (error) {
-      console.error("Payment verification failed:", error);
+    } catch (err) {
+      console.error('Payment error:', err);
       navigate('/payment-failure', { state: { courseId, user } });
     }
   };
@@ -123,24 +120,26 @@ export default function PaymentScreen() {
 
       <div className="card">
         <p><strong>Course Title:</strong> {course.title}</p>
-        <p><strong>Amount (INR):</strong> ₹{course.price}</p>
+        <p><strong>Amount:</strong> ₹{course.price}</p>
         <p><strong>Duration:</strong> 3 Months</p>
         <p><strong>Mode:</strong> Online (Live + Recorded)</p>
         <p><strong>Language:</strong> English + Kannada</p>
       </div>
 
-      <div className="card">
-        <h3>After payment, you will receive:</h3>
+      <div className="card mt-4">
+        <h4>After Payment You Will Get:</h4>
         <ul>
-          <li>- Access to full course content (videos + notes)</li>
-          <li>- Weekly live sessions with expert trainers</li>
-          <li>- Certificate of completion</li>
-          <li>- Exclusive access to student WhatsApp/Telegram group</li>
-          <li>- Email support for 3 months</li>
+          <li>✅ Full course access (Videos + Notes)</li>
+          <li>✅ Weekly live sessions</li>
+          <li>✅ WhatsApp/Telegram group access</li>
+          <li>✅ Certificate of Completion</li>
+          <li>✅ 3 Months of Email Support</li>
         </ul>
       </div>
 
-      <button className="pay-button" onClick={handlePayment}>Pay with Razorpay</button>
+      <button className="pay-button mt-4" onClick={handlePayment}>
+        Pay with Razorpay
+      </button>
     </div>
   );
 }

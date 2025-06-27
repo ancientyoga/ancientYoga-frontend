@@ -1,101 +1,182 @@
-/* Apply background styling */
-.hero-section {
+/* HeroSection.css - Animated Hero Section with Background Slides */
+
+.ancient-hero {
+  position: relative;
   height: 100vh;
-  position: relative;
-  display: flex;
-  flex-direction: column; /* Stack content vertically */
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   overflow: hidden;
-}
-
-.hero-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  background-position: center bottom;
-  animation: backgroundFade 20s infinite;
-  z-index: 0;
-  opacity: 0.5; /* adjust as needed for visibility */
-}
-
-/* Keyframes for background transition */
-@keyframes backgroundFade {
-  0%   { background-image: url('../assets/Herosectiom.png'); }
-  20%  { background-image: url('../assets/1.jpg'); }
-  40%  { background-image: url('../assets/Herosectiom.png'); }
-  60%  { background-image: url('../assets/Herosectiom.png'); }
-  80%  { background-image: url('../assets/5.jpg'); }
-  100% { background-image: url('../assets/Herosectiom.png'); }
-}
-
-/* Content styling */
-.hero-section .content {
-  z-index: 2;
   color: white;
-  max-width: 900px;
-  padding: 20px;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Individual background images */
+.bg-slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  animation-name: bgFadeSlow;
+  animation-duration: 42s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+/* Set delay for each image to create sliding fade effect */
+.bg-slide:nth-child(1) { animation-delay: 0s; z-index: 2; }
+.bg-slide:nth-child(2) { animation-delay: 7s; }
+.bg-slide:nth-child(3) { animation-delay: 14s; }
+.bg-slide:nth-child(4) { animation-delay: 21s; }
+.bg-slide:nth-child(5) { animation-delay: 28s; }
+.bg-slide:nth-child(6) { animation-delay: 35s; }
+
+@keyframes bgFadeSlow {
+  0%, 16.66% {
+    opacity: 1;
+    transform: scale(1.07);
+    z-index: 2;
+  }
+  20%, 100% {
+    opacity: 0;
+    transform: scale(1);
+    z-index: 1;
+  }
+}
+
+/* Content Wrapper */
+.ancient-hero-content {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px; /* Add space between each section */
+  z-index: 10;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 20px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-/* Font styling for each section */
-.hero-title {
-  font-family: 'Arial', sans-serif;
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #FF6347; /* Tomato color for "Welcome to" */
+/* Animated Text */
+.ancient-hero-subtitle,
+.ancient-hero-tagline,
+.ancient-hero-text,
+.ancient-hero-button {
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-out;
+  animation-name: fadeSlideInOut;
+  animation-duration: 7s;
+  animation-iteration-count: infinite;
 }
 
-.hero-subtitle {
-  font-family: 'Georgia', serif;
+.hero-content .title {
+    animation-delay: 0s;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.hero-content .subtitle {
+    animation-delay: 1s;
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+}
+
+.hero-content .description {
+    animation-delay: 2s;
+    font-size: 1.1rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.5;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+/* Delay text entrance */
+.ancient-hero-subtitle {
+  animation-delay: 0s;
   font-size: 2.5rem;
   font-weight: 600;
-  margin-bottom: 10px;
-  color: #32CD32; /* Lime green for "Ancient Yoga" */
+  color:hsl(180, 5.90%, 96.70%);
+  text-shadow: 1px 1px 5px rgba(86, 40, 40, 0.69);
 }
 
-.hero-tagline {
-  font-family: 'Times New Roman', serif;
+.ancient-hero-tagline {
+  animation-delay: 1s;
   font-size: 2rem;
-  font-weight: 500;
-  margin-bottom: 10px;
-  color: #1E90FF; /* Dodger blue for "Transform Your Life with Ancient Yoga Techniques" */
+  color:rgb(242, 243, 244);
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
 }
 
-.hero-text {
-  font-family: 'Verdana', sans-serif;
+.ancient-hero-text {
+  animation-delay: 2s;
   font-size: 1.2rem;
-  margin-bottom: 20px;
-  line-height: 1.5;
-  color: #FFD700; /* Gold for "Unlock the power of ancient wisdom" */
+  color:rgb(250, 250, 252);
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
 }
 
-/* Button styling */
-.cta-button {
-  font-family: 'Roboto', sans-serif;
+.ancient-hero-button {
+  margin-top: 20px;
+  animation-delay: 3s;
+  padding: 14px 40px;
+  font-size: 1.15rem;
   font-weight: 600;
-  color: #333;
-  background-color: #fff;
-  padding: 12px 30px;
-  border-radius: 30px;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  color: white;
+  background:rgb(194, 66, 55);
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(255, 111, 97, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.cta-button:hover {
-  background-color:rgb(136, 134, 130);
-  color: #000;
-  transform: scale(1.1);
-  box-shadow: 0 12px 30px rgba(173, 171, 167, 0.67);
+.ancient-hero-button:hover,
+.ancient-hero-button:focus {
+  background: #FF4C3B;
+  box-shadow: 0 10px 20px rgba(255, 76, 59, 0.7);
+  outline: none;
+}
+
+/* Fade Slide Keyframe */
+@keyframes fadeSlideInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90%, 100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ancient-hero-subtitle { font-size: 1.8rem; }
+  .ancient-hero-tagline { font-size: 1.4rem; }
+  .ancient-hero-text { font-size: 1rem; }
+  .ancient-hero-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .ancient-hero-subtitle { font-size: 1.5rem; }
+  .ancient-hero-tagline { font-size: 1.2rem; }
+  .ancient-hero-text { font-size: 1rem; }
+  .ancient-hero-button {
+    width: 100%;
+    max-width: 280px;
+    padding: 10px 24px;
+  }
 }

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FaLock, FaEnvelope, FaEye, FaEyeSlash } from 'react-icons/fa';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './LoginPage.css';
+import api from '../api'; // ✅ Replaces raw axios
 
-export default function LoginPage() {
+export default function Login() {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +19,7 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      const response = await axios.post(`http://localhost:5000/api/auth/login`, {
+      const response = await api.post('/api/auth/login', {
         email: email.trim(),
         password: password.trim(),
       });
@@ -30,72 +29,84 @@ export default function LoginPage() {
 
         localStorage.setItem('userToken', token);
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('username', user.name);
+        localStorage.setItem('userAvatar', user.profile_picture || 'default-user.png');
 
         alert(`Welcome, ${user.name}`);
-        navigate('/home');
+        window.location.href = '/';
       } else {
         alert(response.data.error || 'Unexpected error');
       }
     } catch (error) {
-      alert(error.response?.data?.error || 'Something went wrong');
+      console.error('Login error:', error);
+      alert(error.response?.data?.error || 'Invalid email or password');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-start min-vh-100 pt-5">
-      <div className="card p-4 shadow" style={{ maxWidth: '400px', width: '100%' }}>
-        <div className="d-flex justify-content-between align-items-center mb-4">
-          <h2 className="text-primary">User Login</h2>
+    <div className="login-container d-flex justify-content-center align-items-center min-vh-100">
+      <div className="login-card shadow-lg p-4 bg-white rounded" style={{ maxWidth: '400px', width: '100%' }}>
+        <div className="text-center mb-4">
+          <h2 className="fw-bold text-gradient">Welcome Back 👋</h2>
+          <p className="text-muted mb-0">Login to your account</p>
         </div>
 
-        <div className="mb-3 position-relative">
-          <FaEnvelope className="position-absolute top-50 translate-middle-y ms-2 text-muted" />
+        <div className="form-group position-relative mb-4">
+          <FaEnvelope className="form-icon text-muted" />
           <input
             type="email"
-            placeholder="Enter your email"
+            className="form-control rounded-pill ps-5"
+            placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="form-control ps-5"
           />
         </div>
 
-        <div className="mb-3 position-relative">
-          <FaLock className="position-absolute top-50 translate-middle-y ms-2 text-muted" />
+        <div className="form-group position-relative mb-4">
+          <FaLock className="form-icon text-muted" />
           <input
             type={showPassword ? 'text' : 'password'}
-            placeholder="Enter your password"
+            className="form-control rounded-pill ps-5 pe-5"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="form-control ps-5 pe-5"
           />
-          <button
-            type="button"
+          <span
+            className="password-toggle text-muted"
             onClick={() => setShowPassword(!showPassword)}
-            className="btn btn-link position-absolute end-0 top-50 translate-middle-y pe-3"
           >
             {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </button>
+          </span>
         </div>
 
         <button
           onClick={handleLogin}
           disabled={loading}
-          className={`btn w-100 ${loading ? 'btn-secondary' : 'btn-primary'}`}
+          className="btn btn-primary rounded-pill w-100 fw-semibold"
         >
           {loading ? 'Logging in...' : 'Login'}
         </button>
 
-        <p className="text-center mt-3">
-          Don’t have an account?
+        <div className="text-center mt-4">
+          <small className="text-muted">Don't have an account?</small>
           <button
             onClick={() => navigate('/register')}
-            className="btn btn-link p-0 ms-1"
+            className="btn btn-link p-0 ms-1 text-decoration-none"
           >
-            Register here
+            Register
           </button>
-        </p>
+        </div>
+
+        <div className="text-center mt-2">
+          <button
+            onClick={() => navigate('/forgot-password')}
+            className="btn btn-link p-0 text-decoration-none"
+          >
+            Forgot Password?
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,58 +1,69 @@
-import React, { useState } from 'react'
-import './style.css'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import './Login.css';
+import { useNavigate } from 'react-router-dom';
+import api from '../api';
 
 const Login = () => {
+  const [values, setValues] = useState({ email: '', password: '' });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-    const [values, setValues] = useState({
-        email: '',
-        password: ''
-    })
-    const [error, setError] = useState(null)
-    const navigate = useNavigate()
-    axios.defaults.withCredentials = true;
-    const handleSubmit = (event) => {
-        event.preventDefault()
-        axios.post('http://localhost:3000/auth/adminlogin', values)
-        .then(result => {
-            if(result.data.loginStatus) {
-                localStorage.setItem("valid", true)
-                navigate('/dashboard')
-            } else {
-                setError(result.data.Error)
-            }
-        })
-        .catch(err => console.log(err))
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await api.post('/auth/adminlogin', values); // uses http://localhost:5000
+      if (res.data.loginStatus) {
+        localStorage.setItem('valid', true);
+        navigate('/dashboard');
+      } else {
+        setError(res.data.Error || 'Login failed. Please try again.');
+      }
+    } catch (err) {
+      console.error('❌ Login error:', err);
+      setError('❌ Server error. Please try again later.');
     }
+  };
 
   return (
-    <div className='d-flex justify-content-center align-items-center vh-100 loginPage'>
-        <div className='p-3 rounded w-25 border loginForm'>
-            <div className='text-warning'>
-                {error && error}
-            </div>
-            <h2>Login Page</h2>
-            <form onSubmit={handleSubmit}>
-                <div className='mb-3'>
-                    <label htmlFor="email"><strong>Email:</strong></label>
-                    <input type="email" name='email' autoComplete='off' placeholder='Enter Email'
-                     onChange={(e) => setValues({...values, email : e.target.value})} className='form-control rounded-0'/>
-                </div>
-                <div className='mb-3'> 
-                    <label htmlFor="password"><strong>Password:</strong></label>
-                    <input type="password" name='password' placeholder='Enter Password'
-                     onChange={(e) => setValues({...values, password : e.target.value})} className='form-control rounded-0'/>
-                </div>
-                <button className='btn btn-success w-100 rounded-0 mb-2'>Log in</button>
-                <div className='mb-1'> 
-                    <input type="checkbox" name="tick" id="tick" className='me-2'/>
-                    <label htmlFor="password">You are Agree with terms & conditions</label>
-                </div>
-            </form>
-        </div>
+    <div className="login-wrapper">
+      <div className="login-card">
+        {error && <div className="login-error">{error}</div>}
+        <h2 className="login-title">Admin Login</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="login-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              autoComplete="off"
+              placeholder="Enter Email"
+              className="login-input"
+              value={values.email}
+              onChange={(e) => setValues({ ...values, email: e.target.value })}
+              required
+            />
+          </div>
+          <div className="login-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter Password"
+              className="login-input"
+              value={values.password}
+              onChange={(e) => setValues({ ...values, password: e.target.value })}
+              required
+            />
+          </div>
+          <div className="login-terms mb-3">
+            <input type="checkbox" id="terms" required />
+            <label htmlFor="terms">I agree to the terms & conditions</label>
+          </div>
+          <button type="submit" className="login-button">Log In</button>
+        </form>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

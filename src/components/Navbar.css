@@ -1,65 +1,71 @@
-.main-navbar {
-    background: #fff;
-    padding: 12px 0;
-    position: relative;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    z-index: 999;
-    transition: all 0.3s ease-in-out;
-  }
+.yoga-navbar-wrapper {
+  background:rgba(255, 255, 255, 0);
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0);
+  transition: all 0.3s ease-in-out;
   
-  .main-navbar.fixed {
-    position: fixed;
-    top: 0;
-   
-  }
+}
+
+.yoga-navbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
   
-  .navbar-logo {
-    height: 42px;
-    width: auto;
-  }
-  
-  .navbar-brand {
-    font-size: 24px;
-    font-weight: bold;
-    color: #222;
-    text-decoration: none;
-    margin-left: 8px;
-  }
-  
-  .navbar-links {
-    gap: 18px;
-    align-items: center;
-  }
-  
-  .navbar-links .nav-link {
-    color: #333;
-    text-decoration: none;
-    padding: 8px 12px;
-    font-weight: 500;
-    border-radius: 8px;
-    position: relative;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .navbar-links .nav-link:hover {
-    background: linear-gradient(135deg, #7f5af0, #2cb67d);
-    color: #fff;
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(127, 90, 240, 0.4);
-  }
-  
-/* Badge styling */
-.user-info .badge {
+}
+
+.yoga-navbar-logo {
+  height: 42px;
+  width: auto;
+}
+
+.yoga-navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #222;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+.yoga-navbar-links {
+  gap: 18px;
+  align-items: center;
+  display: flex;
+}
+
+.yoga-navbar-links .yoga-nav-link {
+  color: #333;
+  text-decoration: none;
+  padding: 8px 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.yoga-navbar-links .yoga-nav-link:hover {
+  background: linear-gradient(135deg, #7f5af0, #2cb67d);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(127, 90, 240, 0.4);
+}
+
+.yoga-user-info .badge {
   font-size: 0.9rem;
   padding: 6px 12px;
   border-radius: 20px;
-  background-color: #007bff; /* Bootstrap primary color */
+  background-color: #007bff;
   color: #fff;
   font-weight: 500;
 }
 
-/* Subscribe button styling */
-.subscribe-btn {
+.yoga-subscribe-btn {
   padding: 6px 12px;
   background-color: #28a745;
   color: #fff;
@@ -70,56 +76,61 @@
   font-weight: 500;
 }
 
-.subscribe-btn:hover {
+.yoga-subscribe-btn:hover {
   background-color: #218838;
 }
 
-.subscribe-btn.subscribed {
+.yoga-subscribe-btn.subscribed {
   background-color: #6c757d;
   cursor: default;
 }
 
-  /* Hamburger Icon */
-  .menu-toggle {
-    display: none;
+.yoga-navbar-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 5px;
+  background: none;
+  border: none;
+}
+
+.yoga-navbar-bar {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 4px 0;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+@media (max-width: 991.98px) {
+  .yoga-navbar-toggle {
+    display: flex;
+  }
+
+  .yoga-navbar-links {
     flex-direction: column;
-    cursor: pointer;
-    padding: 5px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 20px;
+    display: none;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 12px 12px;
+    z-index: 999;
   }
-  
-  .menu-toggle .bar {
-    width: 24px;
-    height: 3px;
-    background-color: #333;
-    margin: 4px 0;
-    border-radius: 2px;
+
+  .yoga-navbar-links.active {
+    display: flex;
   }
-  
-  /* Mobile styles */
-  @media (max-width: 991.98px) {
-    .menu-toggle {
-      display: flex;
-    }
-  
-    .navbar-links {
-      flex-direction: column;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: white;
-      display: none;
-      padding: 20px;
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
-      border-radius: 0 0 12px 12px;
-    }
-  
-    .navbar-links.active {
-      display: flex;
-    }
-  
-    .subscribe-btn {
-      margin-top: 15px;
-    }
+
+  .yoga-subscribe-btn {
+    margin-top: 15px;
   }
-  
+
+  .yoga-user-info {
+    margin-top: 10px;
+  }
+}

@@ -1,94 +1,120 @@
-.footer {
-  background-color: #111827;
-  color: #fff;
+/* Updated and Responsive Footer CSS */
+.yoga-footer {
+  background-color: #0f172a;
+  color: #e2e8f0;
   padding: 60px 20px 30px;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
-.footer-container {
+.yoga-footer-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 40px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-.footer-logo {
-  font-size: 24px;
+.yoga-footer-section h2 {
+  font-size: 20px;
+  margin-bottom: 18px;
+  color: #facc15;
+  font-weight: 600;
+}
+
+.yoga-footer-logo {
+  font-size: 28px;
   font-weight: bold;
+  color: #38bdf8;
   margin-bottom: 15px;
 }
 
-.footer-description {
-  color: #aaa;
+.yoga-footer-description {
+  color: #cbd5e1;
   margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-.footer-socials {
+.yoga-footer-socials {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 10px;
 }
 
-.footer-icon {
+.yoga-footer-icon {
   background-color: #22c55e;
   color: #fff;
   padding: 10px;
   border-radius: 50%;
-  font-size: 18px;
+  font-size: 16px;
+  transition: transform 0.3s;
   cursor: pointer;
 }
 
-.footer-title {
-  font-size: 18px;
-  margin-bottom: 20px;
-  font-weight: bold;
+.yoga-footer-icon:hover {
+  transform: scale(1.1);
 }
 
-.footer-blog {
+.yoga-footer-blog {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 15px;
 }
 
-.footer-blog img {
+.yoga-footer-blog img {
   width: 60px;
   height: 60px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-.footer-links {
+.yoga-footer-blog p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.yoga-footer-blog small {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.yoga-footer-links,
+.yoga-footer-contact {
   list-style: none;
   padding: 0;
-  color: #aaa;
+  margin: 0;
 }
 
-.footer-links li {
-  margin-bottom: 10px;
+.yoga-footer-links li,
+.yoga-footer-contact li {
+  margin-bottom: 12px;
+  font-size: 14px;
   cursor: pointer;
+  transition: color 0.3s ease;
 }
 
-.footer-contact {
-  list-style: none;
-  padding: 0;
-  color: #aaa;
+.yoga-footer-links li:hover {
+  color: #22c55e;
 }
 
-.footer-contact li {
+.yoga-footer-contact li {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  margin-bottom: 12px;
+  color: #cbd5e1;
 }
 
-.footer-contact-icon {
+.yoga-footer-contact-icon {
   color: #22c55e;
   margin-top: 2px;
+  font-size: 16px;
 }
 
-.footer-bottom {
+.yoga-footer-bottom {
   text-align: center;
-  color: #888;
+  color: #94a3b8;
   margin-top: 40px;
-  font-size: 14px;
+  font-size: 13px;
+  border-top: 1px solid #1e293b;
+  padding-top: 20px;
 }

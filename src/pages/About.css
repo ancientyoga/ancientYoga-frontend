@@ -1,23 +1,27 @@
 /* General Styling */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #000;
+  background-color: #000; /* Dark background for white text */
+}
+
+/* Universal text styling inside .ay-container */
+.ay-container {
+  color: #fff;
+  font-weight: bold;
   line-height: 1.6;
-  background-color: #fff;
 }
 
 /* Hero Section */
-.intro-section {
-  background-image: url('../assets/11.jpg');
+.ay-hero {
   background-size: cover;
   background-position: center;
-  color: '#000';
+  color: #fff;
   padding: 100px 0;
   position: relative;
   text-align: center;
 }
 
-.intro-section::before {
+.ay-hero::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -25,71 +29,87 @@ body {
   z-index: 1;
 }
 
-.intro-section .container {
+.ay-hero-content {
   position: relative;
   z-index: 2;
 }
 
-/* Module Cards */
-.module-card {
-  border: none;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  background-color: #f8f9fa;
+/* Headings - White and Bold */
+.ay-container h1,
+.ay-container h2,
+.ay-container h3,
+.ay-container h4,
+.ay-container h5,
+.ay-container h6 {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+/* Paragraphs and other text */
+.ay-container p,
+.ay-container span,
+.ay-container li,
+.ay-container a,
+.ay-container div {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+/* Module Cards - Course Structure Glass Effect */
+.ay-module-card {
+  background: rgba(255, 255, 255, 0); /* Transparent glass */
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 12px;
+  color: #fff !important;
+  font-weight: bold;
+  backdrop-filter: blur(10px); /* Glass blur effect */
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
 }
 
-.module-card:hover {
+.ay-module-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
 }
 
-/* Headings */
-h1, h2, h3 {
-  font-weight: 700;
-}
-
-h2 {
-  font-size: 2.25rem;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-h3 {
-  font-size: 1.5rem;
-  margin-top: 20px;
-  color:rgb(3, 7, 11);
-}
-
-/* Testimonials */
-.testimonials {
-  background-color:rgb(71, 103, 103);
+/* Testimonials Section */
+.ay-testimonials {
+  background-color: #2c3e50;
   padding: 60px 20px;
 }
 
-.testimonial-card {
-  border-left: 5px solidrgb(1, 9, 10);
+.ay-testimonial-card {
+  border-left: 5px solid #fff;
   padding: 20px;
-  background-color: #fff;
+  background-color: #1a1a1a;
   border-radius: 10px;
 }
 
-/* Philosophical Section */
-.philosophy {
-  background-color: #f0f8ff;
+/* Philosophy Section */
+.ay-philosophy {
+  background-color: #1f2d3d;
   padding: 60px 20px;
 }
 
-/* Responsive */
+/* Call to Action Section */
+.ay-cta {
+  background-size: cover;
+  background-position: bottom;
+  padding: 60px 20px;
+}
+
+/* Responsive Styling */
 @media (max-width: 768px) {
-  .intro-section {
+  .ay-hero {
     padding: 60px 20px;
   }
 
-  h2 {
+  .ay-container h2 {
     font-size: 1.8rem;
   }
 
-  .module-card {
+  .ay-module-card {
     margin-bottom: 20px;
   }
 }
