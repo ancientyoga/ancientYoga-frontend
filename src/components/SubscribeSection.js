@@ -19,16 +19,15 @@ function SubscribeSection() {
   }, []);
 
   return (
-    <section className="subscribe-section text-center text-white">
-      <div className="container py-5">
-        <h2 className="display-6 mb-3">
-          Join {subscriberCount}+ Members Transforming Their Lives
-        </h2>
-        <p className="lead">
-          Subscribe now and get full access to life-changing yoga courses.
-        </p>
-        <button className="btn btn-warning btn-lg mt-3">Subscribe Now</button>
-      </div>
+    <section className="subscribe-sec-wrapper">
+      <h2 className="subscribe-sec-heading">
+        Join {subscriberCount}+ Members Transforming Their Lives
+      </h2>
+      <p className="subscribe-sec-text">
+        Subscribe now and get full access to life-changing yoga courses. 
+        Unlock your best self with our guided practices and community support.
+      </p>
+      <button className="subscribe-sec-btn">Subscribe Now</button>
     </section>
   );
 }

@@ -1,4 +1,3 @@
-// src/pages/Home.js
 import React, { useState } from 'react';
 import HeroSection from '../components/HeroSection';
 import SubscribeSection from '../components/SubscribeSection';
@@ -9,8 +8,8 @@ import PricingSection from '../components/PricingSection';
 
 const Home = () => {
   // In a real app, these would come from your auth/user context
-  const isLoggedIn = true;        // set false for guest
-  const hasPurchased = false;     // true if course is purchased
+  const isLoggedIn = true;        // Set to false for guests
+  const hasPurchased = false;     // True if the course is purchased
   const [subscriberCount, setSubscriberCount] = useState(128); 
 
   const handleSubscribeClick = () => {
@@ -25,7 +24,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="home-page">
       <HeroSection />
       <VideoLearning />
       <AboutSection />
@@ -37,7 +36,7 @@ const Home = () => {
         subscriberCount={subscriberCount}
         onSubscribeClick={handleSubscribeClick}
       />
-    </>
+    </div>
   );
 };
 

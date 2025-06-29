@@ -1,7 +1,10 @@
-/* HeroSection.css - Animated Hero Section with Background Slides */
+
 
 .ancient-hero {
   position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 100vh;
   overflow: hidden;
   color: white;
@@ -9,24 +12,22 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Individual background images */
+/* Background Image Slides */
 .bg-slide {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
   opacity: 0;
-  animation-name: bgFadeSlow;
-  animation-duration: 42s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
+  animation: bgFadeSlow 42s infinite ease-in-out forwards;
   transform: scale(1.05);
   z-index: 1;
 }
 
-/* Set delay for each image to create sliding fade effect */
+/* Slide timing delays */
 .bg-slide:nth-child(1) { animation-delay: 0s; z-index: 2; }
 .bg-slide:nth-child(2) { animation-delay: 7s; }
 .bg-slide:nth-child(3) { animation-delay: 14s; }
@@ -47,7 +48,7 @@
   }
 }
 
-/* Content Wrapper */
+/* Hero Content Wrapper */
 .ancient-hero-content {
   position: relative;
   z-index: 10;
@@ -58,63 +59,35 @@
   margin: 0 auto;
 }
 
-/* Animated Text */
+/* Text Elements with Animation */
 .ancient-hero-subtitle,
 .ancient-hero-tagline,
 .ancient-hero-text,
 .ancient-hero-button {
   opacity: 0;
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
-  animation-name: fadeSlideInOut;
-  animation-duration: 7s;
-  animation-iteration-count: infinite;
+  animation: fadeSlideInOut 7s infinite ease-out forwards;
 }
 
-.hero-content .title {
-    animation-delay: 0s;
-    font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-}
-
-.hero-content .subtitle {
-    animation-delay: 1s;
-    font-size: 1.75rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
-}
-
-.hero-content .description {
-    animation-delay: 2s;
-    font-size: 1.1rem;
-    margin-bottom: 1.75rem;
-    line-height: 1.5;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-}
-/* Delay text entrance */
 .ancient-hero-subtitle {
   animation-delay: 0s;
   font-size: 2.5rem;
   font-weight: 600;
-  color:hsl(180, 5.90%, 96.70%);
+  color: hsl(180, 5.90%, 96.70%);
   text-shadow: 1px 1px 5px rgba(86, 40, 40, 0.69);
 }
 
 .ancient-hero-tagline {
   animation-delay: 1s;
   font-size: 2rem;
-  color:rgb(242, 243, 244);
-  text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+  color: rgb(242, 243, 244);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
 }
 
 .ancient-hero-text {
   animation-delay: 2s;
   font-size: 1.2rem;
-  color:rgb(250, 250, 252);
-  text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+  color: rgb(250, 250, 252);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
 .ancient-hero-button {
@@ -124,7 +97,7 @@
   font-size: 1.15rem;
   font-weight: 600;
   color: white;
-  background:rgb(194, 66, 55);
+  background: rgb(194, 66, 55);
   border: none;
   border-radius: 40px;
   cursor: pointer;
@@ -139,7 +112,7 @@
   outline: none;
 }
 
-/* Fade Slide Keyframe */
+/* Animation Keyframes */
 @keyframes fadeSlideInOut {
   0% {
     opacity: 0;
@@ -159,7 +132,7 @@
   }
 }
 
-/* Responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
   .ancient-hero-subtitle { font-size: 1.8rem; }
   .ancient-hero-tagline { font-size: 1.4rem; }

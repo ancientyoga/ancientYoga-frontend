@@ -116,7 +116,9 @@ export default function PaymentScreen() {
 
   return (
     <div className="payment-container">
-      <h2 className="header">Course Payment Confirmation</h2>
+      <br/>
+      <br/>
+      <h1 className="header">Course Payment Confirmation</h1>
 
       <div className="card">
         <p><strong>Course Title:</strong> {course.title}</p>

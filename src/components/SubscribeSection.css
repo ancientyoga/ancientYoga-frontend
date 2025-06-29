@@ -1,12 +1,12 @@
-/* src/components/SubscribeSection.css */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@700&display=swap');
 
 .subscribe-sec-wrapper {
-  background: linear-gradient(145deg, #1d2b64, #f8cdda);
+  background: linear-gradient(145deg,rgba(41, 44, 53, 0.67),rgba(211, 104, 136, 0.41));
   background-size: 200% 200%;
   animation: subscribe-sec-pulseGradient 10s ease infinite;
-  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 100px rgba(148, 86, 86, 0.7);
   padding: 60px 20px;
-  color: #fff;
+  color: #000;
   text-align: center;
   border-radius: 16px;
   margin: 40px auto;
@@ -20,13 +20,15 @@
 }
 
 .subscribe-sec-heading {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
   margin-bottom: 20px;
 }
 
 .subscribe-sec-text {
-  font-size: 1.2rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.3rem;
   max-width: 800px;
   margin: 0 auto 30px auto;
   line-height: 1.6;
@@ -35,9 +37,10 @@
 .subscribe-sec-btn {
   background-color: #ffffff;
   color: #1d2b64;
+  font-family: 'Poppins', sans-serif;
   font-weight: bold;
-  padding: 12px 30px;
-  font-size: 1.1rem;
+  padding: 14px 35px;
+  font-size: 1.2rem;
   border: none;
   border-radius: 30px;
   cursor: pointer;
@@ -51,34 +54,29 @@
 }
 
 /* Responsive Design */
-
 @media (max-width: 768px) {
   .subscribe-sec-heading {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
-
   .subscribe-sec-text {
-    font-size: 1.05rem;
+    font-size: 1.1rem;
   }
-
   .subscribe-sec-btn {
-    padding: 10px 25px;
-    font-size: 1rem;
+    padding: 12px 28px;
+    font-size: 1.05rem;
   }
 }
 
 @media (max-width: 480px) {
   .subscribe-sec-heading {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
-
   .subscribe-sec-text {
     font-size: 1rem;
     padding: 0 10px;
   }
-
   .subscribe-sec-btn {
-    padding: 10px 20px;
+    padding: 10px 24px;
     font-size: 0.95rem;
   }
 }

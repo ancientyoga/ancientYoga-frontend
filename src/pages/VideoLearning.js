@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './VideoLearning.css';
+import { BASE_URL } from '../api';
 import api from '../api'; // ✅ imported custom axios instance
 import coursebg from '../assets/coursebg.png'; // Hero background image
 
@@ -68,6 +69,8 @@ function VideoLearning() {
       <br />
       <br />
       <br />
+      <br />
+      <br />
       <div
         className="video-hero text-white text-center p-5 mb-5"
         style={{
@@ -93,7 +96,7 @@ function VideoLearning() {
                       <div className="video-card h-100 shadow-sm rounded overflow-hidden">
                         <div className="position-relative">
                           <img
-                            src={video.thumbnail ? `http://localhost:5000/uploads/${video.thumbnail}` : '/default-thumbnail.jpg'}
+                            src={video.thumbnail ? `${BASE_URL}/uploads/${video.thumbnail}` : '/default-thumbnail.jpg'}
                             alt={video.title}
                             className="w-100"
                             style={{ objectFit: 'cover', height: '200px' }}

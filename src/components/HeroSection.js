@@ -25,8 +25,10 @@ function HeroSection() {
       ))}
 
       <div className="ancient-hero-content">
-        <h1 className="ancient-hero-subtitle">Ancient Yoga</h1>
-        <h3 className="ancient-hero-tagline">Transform Your Life with Ancient Yoga Techniques</h3>
+        <br/>
+        <br/>
+        <h1 className="ancient-hero-subtitle">Welcome to Ancient Yoga</h1>
+        <h3 className="ancient-hero-tagline">"Transform Your Life with Ancient Yoga Techniques"</h3>
         <p className="ancient-hero-text">
           Unlock the power of ancient wisdom to rejuvenate your body, mind, and soul.
         </p>

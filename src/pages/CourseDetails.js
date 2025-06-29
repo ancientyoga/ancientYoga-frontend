@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import api from '../api'; // ✅ Using central API instance
+import api from '../api';
 
 const CourseDetails = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -36,6 +36,20 @@ const CourseDetails = () => {
     fetchCourses();
   }, [courseId]);
 
+  // 🔥 NEW: this loads course details without changing route
+  const handleViewDetails = async (course) => {
+    try {
+      setLoading(true);
+      const selectedRes = await api.get(`/api/courses/${course.id}`);
+      setSelectedCourse(selectedRes.data);
+    } catch (err) {
+      console.error('❌ Failed to load course data:', err);
+      setError('Could not load course details.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleBuyNow = (course) => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || !user.email) {
@@ -56,11 +70,12 @@ const CourseDetails = () => {
       <br />
       <br />
       <br />
+      <br />
+      <br />
 
       {/* 🌿 Selected Course Section */}
       {selectedCourse ? (
         <div className="row mb-5">
-          {/* Left: Course Details */}
           <div className="col-lg-6 mb-4">
             <div className="p-4 rounded shadow course-card bg-white">
               <h2 className="text-success fw-bold">{selectedCourse.title}</h2>
@@ -84,7 +99,6 @@ const CourseDetails = () => {
             </div>
           </div>
 
-          {/* Right: Background Banner */}
           <div className="col-lg-6">
             <div
               className="bg-section d-flex align-items-center justify-content-center text-black text-center rounded"
@@ -117,7 +131,7 @@ const CourseDetails = () => {
                 <div className="d-flex justify-content-between mt-auto">
                   <button
                     className="btn btn-outline-primary me-2"
-                    onClick={() => navigate(`/course/${course.id}/coursedetails`, { state: { courseData: course.id } })}
+                    onClick={() => handleViewDetails(course)}
                   >
                     View Details
                   </button>
@@ -130,7 +144,6 @@ const CourseDetails = () => {
           ))}
       </div>
 
-      {/* Scoped styling */}
       <style>{`
         .course-card {
           background: rgba(255, 255, 255, 0.95);

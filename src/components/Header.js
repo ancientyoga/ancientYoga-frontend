@@ -7,10 +7,25 @@ import api from '../api';
 const Header = () => {
   const [subscribed, setSubscribed] = useState(false);
   const [count, setCount] = useState(0);
+  const [visible, setVisible] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check if returning from purchase page
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+      lastScrollY = currentScrollY;
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   useEffect(() => {
     if (location.state?.subscribed) {
       setSubscribed(true);
@@ -30,30 +45,23 @@ const Header = () => {
     };
     fetchSubCount();
 
-    // Load subscription status from localStorage
     const isSubscribed = localStorage.getItem('isSubscribed');
-    if (isSubscribed === 'true') {
-      setSubscribed(true);
-    }
+    if (isSubscribed === 'true') setSubscribed(true);
   }, []);
 
   const handleSubscribe = () => {
     if (subscribed) return;
-
     alert("You need to purchase the course to subscribe.");
     navigate('/course-details', { state: { fromSubscribe: true } });
   };
 
   return (
-    <div className="tops-info-bar" id="topInfoBar">
+    <div className={`tops-info-bar ${visible ? '' : 'hide-header'}`} id="topInfoBar">
       <div className="container-fluid d-flex flex-column flex-sm-row justify-content-between align-items-center py-1">
         {/* Left Info */}
-        <div className="admi d-flex flex-wrap align-items-center gap-2 text-center text-sm-start">
-          <i className="info bi bi-geo-alt-fill"></i>
-          <span>Vijayapura - 586101</span>
-          <i className="info bi bi-telephone-fill ms-sm-3"></i>
-          <span>+91 81528 53260</span>
-          <a href="/admin/login" className="admi btn btn-outline-danger btn-sm">
+        <div className=" d-flex flex-wrap align-items-center gap-2 text-center text-sm-start">
+         
+          <a href="/admin/login" className="btn btn-outline-danger btn-sm">
             <RiAdminFill /> Admin
           </a>
         </div>
@@ -72,6 +80,7 @@ const Header = () => {
           <a href="https://www.instagram.com/nandisoftechsolution?igsh=cm5xNWk2eGJpbW54" target="_blank" rel="noreferrer">
             <i className="bi bi-instagram"></i>
           </a>
+          
           <button
             onClick={handleSubscribe}
             className={`btn btn-sm ${subscribed ? 'btn-success' : 'btn-outline-warning'}`}
